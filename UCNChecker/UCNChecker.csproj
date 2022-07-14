@@ -8,13 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Cities.txt" />
     <None Remove="inserts %282%29.txt" />
+    <None Remove="Regions.txt" />
     <None Remove="res\Cities.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Cities.txt">
+    <Content Include="Regions.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
