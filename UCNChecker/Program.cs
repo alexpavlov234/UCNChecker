@@ -2,7 +2,7 @@
 {
     internal class Program
     {
-        static Dictionary<string, string> RegionsDictionary = ReadFromFile(AppDomain.CurrentDomain.BaseDirectory + "/Regions.txt");
+        static Dictionary<string, string> _dictionary = ReadFromFile(AppDomain.CurrentDomain.BaseDirectory + "/Cities.txt");
         static void Main(string[] args)
         {
 
@@ -19,45 +19,21 @@
                 {
                     string wholeDate = UCN.Substring(0, 6);
                     int monthDate = Int32.Parse(UCN.Substring(2, 2));
+                   
 
-                    if (monthDate <= 12 && IsValidDate(WholeDateNormalizer(wholeDate, 0)))
+                    if (monthDate <= 12 && IsValidDate(wholeDate))
                     {
 
-                        if (CheckCityRegion(UCN))
-                        {
-                            return LastNumChecker(UCN);
-                        }
-                        else
-                        {
-                            return false;
-                        }
                         return true;
                     }
                     else if (monthDate > 12 && monthDate <= 32 && IsValidDate(WholeDateNormalizer(wholeDate, 20)))
                     {
 
-                        if (CheckCityRegion(UCN))
-                        {
-                            return LastNumChecker(UCN);
-                        }
-                        else
-                        {
-                            return false;
-                        }
                         return true;
                     }
                     else if (monthDate > 40 && monthDate <= 52 && IsValidDate(WholeDateNormalizer(wholeDate, 40)))
                     {
 
-                        if (CheckCityRegion(UCN))
-                        {
-
-                            return LastNumChecker(UCN);
-                        }
-                        else
-                        {
-                            return false;
-                        }
                         return true;
                     }
                     else
@@ -119,60 +95,11 @@
         {
             return File.ReadLines(file).ToDictionary(x => x.Split(',')[0].Trim(), x => x.Split(',')[1].Trim());
         }
-
-        static bool CheckCityRegion(string UCN)
-        {
-
-
-            return RegionsDictionary.ContainsKey(UCN.Substring(5, 3));
-        }
-
-        static bool LastNumChecker(string UCN)
-        {
-            int sum = 0;
-            int divisionWithRemainder;
-            int lastNumberOfUCN;
-
-            char[] numbersCharArray = UCN.ToCharArray();
-
-            int[] numbersIntegerArray = Array.ConvertAll(numbersCharArray, c => (int)Char.GetNumericValue(c));
-
-            int[] numbersWeight = { 2, 4, 8, 5, 10, 9, 7, 3, 6 };
-
-
-            for (int i = 0; i < numbersWeight.Length; i++)
-            {
-                sum += numbersIntegerArray[i] * numbersWeight[i];
-            }
-
-            divisionWithRemainder = sum / 11;
-
-            lastNumberOfUCN = sum - 11 * divisionWithRemainder;
-
-            if (lastNumberOfUCN < 10)
-            {
-
-                if (UCN.Substring(UCN.Length - 1).Equals(lastNumberOfUCN.ToString()))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                lastNumberOfUCN = 0;
-                if (UCN.Substring(UCN.Length - 1).Equals(lastNumberOfUCN.ToString()))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
+        //       public bool IsValidDate(int year, int month, int day)
+        //{
+        //    return year >= 1 && year <= 9999
+        //            && month >= 1 && month <= 12
+        //            && day >= 1 && day <= DateTime.DaysInMonth(year, month);
+        //}
     }
 }
