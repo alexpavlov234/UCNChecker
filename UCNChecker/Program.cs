@@ -6,13 +6,16 @@
         static void Main(string[] args)
         {
 
+
+            UcnCheck("9931136319");
         }
-        static bool UCNCheck(string UCN)
+        static bool UcnCheck(string UCN)
         {
             try
             {
                 if (UCN.Length != 10 || !IsDigitsOnly(UCN))
                 {
+                    //Console.WriteLine("dd");
                     return false;
                 }
                 else
@@ -61,33 +64,17 @@
         }
         static bool IsValidDate(string str)
         {
-
-
-            if (DateTime.TryParseExact(str, "yyyyMMdd", null, System.Globalization.DateTimeStyles.AllowWhiteSpaces | System.Globalization.DateTimeStyles.AdjustToUniversal, out DateTime result))
-                return true;
-            else
+            if (DateTime.TryParseExact(str, "yyMMdd", null, System.Globalization.DateTimeStyles.AllowWhiteSpaces |
+                               System.Globalization.DateTimeStyles.AdjustToUniversal, out DateTime result))
                 return false;
-
+            else
+                return true;
 
         }
 
         static string WholeDateNormalizer(string date, int number)
         {
-            if (number == 0)
-            {
-                date = "19" + date.Substring(0, 2) + string.Format("{0:00}", Int32.Parse(date.Substring(2, 2)) - number) + date.Substring(2 + 2);
-            }
-            else if (number == 20)
-            {
-                date = "18" + date.Substring(0, 2) + string.Format("{0:00}", Int32.Parse(date.Substring(2, 2)) - number) + date.Substring(2 + 2);
-            }
-            else if (number == 40)
-            {
-                date = "20" + date.Substring(0, 2) + string.Format("{0:00}", Int32.Parse(date.Substring(2, 2)) - number) + date.Substring(2 + 2);
-            }
-
-
-
+            date = date.Substring(0, 2) + string.Format("{0:00}", Int32.Parse(date.Substring(2, 2)) - number) + date.Substring(2 + 2);
             return date;
         }
 
